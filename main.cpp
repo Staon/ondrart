@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include "linedriverios.h"
 #include "linedriverpre.h"
 #include "typograph.h"
 #include "typographblockattrs.h"
@@ -36,7 +37,8 @@ int main(
   std::cout << "<html><body><pre>" << std::endl;
 
   T::LineDriverPre driver_(&std::cout);
-  T::Typograph typo_(&driver_, 80);
+  T::LineDriverIos driver2_(&std::cout, T::LineDriverIos::SYNC);
+  T::Typograph typo_(&driver2_, 80);
 
   T::TypographBlockText block1_(
 "#bg:blue#Lorem *ipsum* **dolor** sit amet, consectetuer adipiscing elit. Nulla est. Lorem "

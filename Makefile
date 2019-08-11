@@ -3,6 +3,7 @@ CXXFLAGS=-g -O0 -std=c++11
 
 OBJS = \
 	linedriver.o \
+	linedriverios.o \
 	linedriverpre.o \
 	typoerror.o \
 	typograph.o \
