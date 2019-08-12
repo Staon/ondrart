@@ -64,7 +64,7 @@ class TypographBlockText : public TypographBlock {
         int next_width_,
         const TypographState& origin_);
     bool isFinished() const noexcept;
-    virtual Margin getMargin() const noexcept override;
+    virtual Border getMargin() const noexcept override;
 
   private:
     void flushPrepared(

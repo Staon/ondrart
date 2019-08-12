@@ -33,7 +33,8 @@ Typograph::Typograph(
     LineDriver* driver_,
     int width_) :
   driver(driver_),
-  width(width_) {
+  width(width_),
+  last_bottom_margin(0) {
   assert(driver != nullptr && width_ > 0);
 
 }
@@ -45,6 +46,8 @@ Typograph::~Typograph() {
 void Typograph::writeBlock(
     TypographBlock& block_) {
   auto margin_(block_.getMargin());
+  if(margin_.top > last_bottom_margin)
+    margin_.top -= last_bottom_margin;
 
   /* -- print top margin */
   for(int i_(0); i_ < margin_.top; ++i_) {
@@ -73,6 +76,7 @@ void Typograph::writeBlock(
     driver->skipChars(width);
     driver->breakLine();
   }
+  last_bottom_margin = margin_.bottom;
 }
 
 void Typograph::writeEmptyLine() {

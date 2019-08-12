@@ -78,7 +78,7 @@ bool TypographBlockPar::isFinished() const noexcept {
   return block->isFinished();
 }
 
-TypographBlockPar::Margin TypographBlockPar::getMargin() const noexcept {
+TypographBlockPar::Border TypographBlockPar::getMargin() const noexcept {
   return {0, 0, 0, 0};
 }
 

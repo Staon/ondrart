@@ -32,14 +32,16 @@ class TypographState;
  */
 class TypographBlock {
   public:
-    struct Margin {
+    struct Border {
       int left;
       int top;
       int right;
       int bottom;
 
-      Margin merge(
-          const Margin& other_) const;
+      Border merge(
+          const Border& other_) const;
+      Border sub(
+          const Border& other_) const;
     };
 
   public:
@@ -75,7 +77,7 @@ class TypographBlock {
     /**
      * @brief Get block's margins
      */
-    virtual Margin getMargin() const noexcept = 0;
+    virtual Border getMargin() const noexcept = 0;
 };
 
 } /* -- namespace Typograph */

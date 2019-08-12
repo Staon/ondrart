@@ -189,7 +189,7 @@ bool TypographBlockText::isFinished() const noexcept {
   return finished && prepared.empty();
 }
 
-TypographBlockText::Margin TypographBlockText::getMargin() const noexcept {
+TypographBlockText::Border TypographBlockText::getMargin() const noexcept {
   return {0, 0, 0, 0};
 }
 

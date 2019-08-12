@@ -21,6 +21,9 @@
 
 #include <assert.h>
 
+#include "linedriver.h"
+#include "typoerror.h"
+
 namespace OndraRT {
 
 namespace Typograph {
@@ -29,7 +32,10 @@ TypographBlockBox::TypographBlockBox(
     TypographBlock* block_,
     int margin_) :
   block(block_),
-  margin{margin_, margin_, margin_, margin_} {
+  margin{margin_, margin_, margin_, margin_},
+  padding{0, 0, 0, 0},
+  current_top(0),
+  current_bottom(0) {
   assert(block != nullptr);
 
 }
@@ -41,16 +47,22 @@ TypographBlockBox::TypographBlockBox(
     int right_,
     int bottom_) :
   block(block_),
-  margin{left_, top_, right_, bottom_} {
+  margin{left_, top_, right_, bottom_},
+  padding{0, 0, 0, 0},
+  current_top(0),
+  current_bottom(0) {
   assert(block != nullptr);
 
 }
 
 TypographBlockBox::TypographBlockBox(
     TypographBlock* block_,
-    const Margin& margin_) :
+    const Border& margin_) :
   block(block_),
-  margin(margin_) {
+  margin(margin_),
+  padding{0, 0, 0, 0},
+  current_top(0),
+  current_bottom(0) {
   assert(block != nullptr);
 
 }
@@ -59,20 +71,72 @@ TypographBlockBox::~TypographBlockBox() {
 
 }
 
+void TypographBlockBox::setPadding(
+    int padding_) {
+  padding = {padding_, padding_, padding_, padding_};
+  current_top = current_top = padding_;
+}
+
+void TypographBlockBox::setPadding(
+    const Border& padding_) {
+  padding = padding_;
+  current_top = padding.top;
+  current_bottom = padding.bottom;
+}
+
+void TypographBlockBox::setPadding(
+    int left_,
+    int top_,
+    int right_,
+    int bottom_) {
+  padding = {left_, top_, right_, bottom_};
+  current_top = padding.top;
+  current_bottom = padding.bottom;
+}
+
 void TypographBlockBox::writeLine(
     LineDriver& driver_,
     int width_,
     int next_width_,
     const TypographState& origin_) {
-  return block->writeLine(driver_, width_, next_width_, origin_);
+  /* -- print top padding */
+  if (current_top > 0) {
+    driver_.skipChars(width_);
+    --current_top;
+    return;
+  }
+
+  if (!block->isFinished()) {
+    auto nested_width_(width_ - padding.left - padding.right);
+    if (nested_width_ < 1)
+      throw TypoError("there is not enough space to print the box");
+    auto nested_width_next_(next_width_ - padding.left - padding.right);
+    if (nested_width_next_ < 1)
+      throw TypoError("there is not enough space to print the box");
+    driver_.skipChars(padding.left);
+    block->writeLine(
+        driver_, nested_width_, nested_width_next_, origin_);
+    driver_.skipChars(padding.right);
+    return;
+  }
+
+  /* -- print bottom padding */
+  if (current_bottom > 0) {
+    driver_.skipChars(width_);
+    --current_bottom;
+    return;
+  }
+
+  /* -- the box is finished, just skip characters */
+  driver_.skipChars(width_);
 }
 
 bool TypographBlockBox::isFinished() const noexcept {
-  return block->isFinished();
+  return current_top <= 0 && current_bottom <= 0 && block->isFinished();
 }
 
-TypographBlockBox::Margin TypographBlockBox::getMargin() const noexcept {
-  return margin.merge(block->getMargin());
+TypographBlockBox::Border TypographBlockBox::getMargin() const noexcept {
+  return margin.merge(block->getMargin().sub(padding));
 }
 
 } /* -- namespace Typograph */

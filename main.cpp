@@ -38,7 +38,7 @@ int main(
 
   T::LineDriverPre driver_(&std::cout);
   T::LineDriverIos driver2_(&std::cout, T::LineDriverIos::SYNC);
-  T::Typograph typo_(&driver2_, 80);
+  T::Typograph typo_(&driver_, 80);
 
   T::TypographBlockText block1_(
 "#bg:blue#Lorem *ipsum* **dolor** sit amet, consectetuer adipiscing elit. Nulla est. Lorem "
@@ -52,7 +52,8 @@ int main(
 "Integer pellentesque quam vel velit. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Praesent in mauris eu tortor porttitor accumsan. Nulla est. Fusce wisi. Mauris elementum mauris vitae tortor. Suspendisse sagittis ultrices augue. Aliquam erat volutpat. Quisque tincidunt scelerisque libero. Proin in tellus sit amet nibh dignissim sagittis. In dapibus augue non sapien. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Maecenas aliquet accumsan leo. "
 "Aliquam ante. Mauris tincidunt sem sed arcu. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Nullam sit amet magna in magna gravida vehicula. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Integer vulputate sem a nibh rutrum consequat. Pellentesque sapien. Quisque porta. Fusce consectetuer risus a nunc. Vivamus ac leo pretium faucibus. Praesent id justo in neque elementum ultrices. Nullam sit amet magna in magna gravida vehicula. Nam sed tellus id magna elementum tincidunt. Nullam dapibus fermentum ipsum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. ");
   T::TypographBlockPar par1_(&block1_, 2, 0);
-  T::TypographBlockBox box1_(&par1_, 1, 0, 1, 0);
+  T::TypographBlockBox box1_(&par1_, 0, 0, 0, 0);
+  box1_.setPadding(0, 0, 0, 0);
   T::TypographBlockAttrs attrs1_(
       &box1_,
       T::LineDriver::FS_DEFAULT,
@@ -71,7 +72,7 @@ int main(
 "risus sit amet ante. Etiam ligula pede, sagittis quis, interdum ultricies, "
 "scelerisque eu. Nam quis nulla.");
   T::TypographBlockPar par2_(&block2_, 0, 2);
-  T::TypographBlockBox box2_(&par2_, 1, 0, 3, 0);
+  T::TypographBlockBox box2_(&par2_, 0, 0, 0, 0);
 
   T::TypographBlock* aseq1[] = {&attrs1_, &box2_};
   T::TypographBlockSeq seq1_(aseq1, 2);
@@ -79,11 +80,13 @@ int main(
   T::TypographBlockText block3_(
 "Nulla pulvinar eleifend sem. Etiam quis quam. Curabitur bibendum justo non orci. Integer tempor. Proin in tellus sit amet nibh dignissim sagittis. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Proin mattis lacinia justo. Suspendisse sagittis ultrices augue. Nunc dapibus tortor vel mi dapibus sollicitudin. Vivamus porttitor turpis ac leo. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Aenean id metus id velit ullamcorper pulvinar. Aenean placerat. Aliquam erat volutpat. Praesent in mauris eu tortor porttitor accumsan. Cras pede libero, dapibus nec, pretium sit amet, tempor quis.");
   T::TypographBlockPar par3_(&block3_, 4, 0);
-  T::TypographBlockBox box3_(&par3_, 1, 0, 1, 0);
+  T::TypographBlockBox box3_(&par3_, 2, 0, 2, 0);
+  T::TypographBlockBox box4_(&box3_, 0);
+  box4_.setPadding(5);
 
   T::TypographBlockCols::Column cols_[2] = {
       {&seq1_, -1},
-      {&box3_, -1},
+      {&box4_, -1},
   };
   T::TypographBlockCols tcols_(cols_, 2);
   T::TypographBlockAttrs attrs2_(

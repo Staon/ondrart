@@ -74,6 +74,7 @@ class Typograph {
   private:
     LineDriver* driver;
     int width;
+    int last_bottom_margin;
 };
 
 } /* -- namespace Typograph */

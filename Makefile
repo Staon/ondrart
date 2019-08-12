@@ -5,6 +5,7 @@ OBJS = \
 	linedriver.o \
 	linedriverios.o \
 	linedriverpre.o \
+	getopt.o \
 	typoerror.o \
 	typograph.o \
 	typographblock.o \

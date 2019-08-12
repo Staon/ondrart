@@ -130,7 +130,7 @@ bool TypographBlockCols::isFinished() const noexcept {
       [](const Column& col){ return col.block->isFinished();});
 }
 
-TypographBlockCols::Margin TypographBlockCols::getMargin() const noexcept {
+TypographBlockCols::Border TypographBlockCols::getMargin() const noexcept {
   int left_(columns[0].block->getMargin().left);
   int right_(columns[colsnum - 1].block->getMargin().right);
   int top_(0);

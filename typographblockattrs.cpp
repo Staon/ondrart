@@ -51,7 +51,7 @@ bool TypographBlockAttrs::isFinished() const noexcept {
   return block->isFinished();
 }
 
-TypographBlockAttrs::Margin TypographBlockAttrs::getMargin() const noexcept {
+TypographBlockAttrs::Border TypographBlockAttrs::getMargin() const noexcept {
   return block->getMargin();
 }
 

@@ -78,7 +78,7 @@ bool TypographBlockSeq::isFinished() const noexcept {
   return current_block >= blocks_num;
 }
 
-TypographBlockSeq::Margin TypographBlockSeq::getMargin() const noexcept {
+TypographBlockSeq::Border TypographBlockSeq::getMargin() const noexcept {
   int top_(blocks[0]->getMargin().top);
   int bottom_(blocks[blocks_num - 1]->getMargin().bottom);
   int left_(0);

@@ -23,8 +23,8 @@ namespace OndraRT {
 
 namespace Typograph {
 
-TypographBlock::Margin TypographBlock::Margin::merge(
-    const TypographBlock::Margin& other_) const {
+TypographBlock::Border TypographBlock::Border::merge(
+    const TypographBlock::Border& other_) const {
   return {
     (left < other_.left) ? other_.left : left,
     (top < other_.top) ? other_.top : top,
@@ -32,6 +32,17 @@ TypographBlock::Margin TypographBlock::Margin::merge(
     (bottom < other_.bottom) ? other_.bottom : bottom,
   };
 }
+
+TypographBlock::Border TypographBlock::Border::sub(
+    const TypographBlock::Border& other_) const {
+  return {
+    (left < other_.left)? 0 : (left - other_.left),
+    (top < other_.top)? 0 : (top - other_.top),
+    (right < other_.right)? 0 : (right - other_.right),
+    (bottom < other_.bottom)? 0 : (bottom - other_.bottom),
+  };
+}
+
 
 TypographBlock::TypographBlock() {
 

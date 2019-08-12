@@ -42,7 +42,7 @@ class TypographBlockBox : public TypographBlock {
         int bottom_);
     explicit TypographBlockBox(
         TypographBlock* block_,
-        const Margin& margin_);
+        const Border& margin_);
 
     virtual ~TypographBlockBox();
 
@@ -52,6 +52,32 @@ class TypographBlockBox : public TypographBlock {
     TypographBlockBox& operator =(
         const TypographBlockBox&) = delete;
 
+    /**
+     * @brief Set padding (the same in all directions)
+     */
+    void setPadding(
+        int padding_);
+
+    /**
+     * @brief Set padding
+     */
+    void setPadding(
+        const Border& padding_);
+
+    /**
+     * @brief Set padding
+     *
+     * @param left_ Left padding
+     * @param top_ Top padding
+     * @param right_ Right padding
+     * @param bottom_ Bottom padding
+     */
+    void setPadding(
+        int left_,
+        int top_,
+        int right_,
+        int bottom_);
+
     /* -- typograph block */
     virtual void writeLine(
         LineDriver& driver_,
@@ -59,11 +85,14 @@ class TypographBlockBox : public TypographBlock {
         int next_width_,
         const TypographState& origin_) override;
     virtual bool isFinished() const noexcept override;
-    virtual Margin getMargin() const noexcept override;
+    virtual Border getMargin() const noexcept override;
 
   private:
     TypographBlock* block;
-    Margin margin;
+    Border margin;
+    Border padding;
+    int current_top;
+    int current_bottom;
 };
 
 } /* -- namespace Typograph */

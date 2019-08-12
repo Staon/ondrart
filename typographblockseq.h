@@ -58,7 +58,7 @@ class TypographBlockSeq : public TypographBlock {
         int next_width_,
         const TypographState& origin_) override;
     virtual bool isFinished() const noexcept override;
-    virtual Margin getMargin() const noexcept override;
+    virtual Border getMargin() const noexcept override;
 
   public:
     TypographBlock** blocks;
