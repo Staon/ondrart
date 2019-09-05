@@ -12,6 +12,7 @@ OBJS = \
 	typographblockattrs.o \
 	typographblockbox.o \
 	typographblockcols.o \
+	typographblockholder.o \
 	typographblockpar.o \
 	typographblockseq.o \
 	typographblocktext.o \
