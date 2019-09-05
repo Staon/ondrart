@@ -79,10 +79,6 @@ void Typograph::writeBlock(
   last_bottom_margin = margin_.bottom;
 }
 
-void Typograph::writeEmptyLine() {
-  driver->breakLine();
-}
-
 } /* -- namespace Typograph */
 
 } /* -- namespace OndraRT */

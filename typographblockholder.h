@@ -17,63 +17,62 @@
  * along with OndraRT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OndraRT__TYPOGRAPH_H_
-#define OndraRT__TYPOGRAPH_H_
+#ifndef OndraRT__TYPOGRAPHBLOCKHOLDER_H_
+#define OndraRT__TYPOGRAPHBLOCKHOLDER_H_
+
+#include <memory>
+#include <vector>
 
 namespace OndraRT {
 
 namespace Typograph {
 
-class LineDriver;
 class TypographBlock;
 
 /**
- * @brief A typograph object
- *
- * The typograph object is responsible to format block of texts to a line
- * driver (a text line oriented device, usually a terminal).
- *
- * The typograph object is useful for formatting of command line helps.
+ * @brief A helper holder of the ownership of typograph blocks
  */
-class Typograph {
+class TypographBlockHolder {
   public:
     /**
      * @brief Ctor
-     *
-     * @param driver_ A line driver. The ownership is not taken.
-     * @param width_ Width of the line device
      */
-    explicit Typograph(
-        LineDriver* driver_,
-        int width_);
+    TypographBlockHolder();
 
     /**
      * @brief Dtor
      */
-    ~Typograph();
-
-    /* -- avoid copying */
-    Typograph(
-        const Typograph&) = delete;
-    Typograph& operator =(
-        const Typograph&) = delete;
+    ~TypographBlockHolder();
 
     /**
-     * @brief Write a text block
+     * @brief Get the ownership of a block
      *
-     * @param block_ The block.
+     * @param block_ the block
+     * @return the block
      */
-    void writeBlock(
-        TypographBlock& block_);
+    TypographBlock* holdBlock(
+        std::unique_ptr<TypographBlock>&& block_);
+
+    /**
+     * @brief Create new block
+     *
+     * @param args_ arguments of the block (perfectly forwarded into the
+     *     constructor)
+     * @return The block
+     */
+    template<typename Block_, typename... Args_>
+    Block_* createBlock(
+        Args_&&... args_) {
+      return static_cast<Block_*>(holdBlock(
+          std::unique_ptr<Block_>(new Block_(std::forward<Args_>(args_)...))));
+    }
 
   private:
-    LineDriver* driver;
-    int width;
-    int last_bottom_margin;
+    std::vector<std::unique_ptr<TypographBlock>> blocks;
 };
 
 } /* -- namespace Typograph */
 
 } /* -- namespace OndraRT */
 
-#endif /* OndraRT__TYPOGRAPH_H_ */
+#endif /* OndraRT__TYPOGRAPHBLOCKHOLDER_H_ */

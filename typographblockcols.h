@@ -22,6 +22,8 @@
 
 #include "typographblock.h"
 
+#include <vector>
+
 namespace OndraRT {
 
 namespace Typograph {
@@ -68,8 +70,7 @@ class TypographBlockCols : public TypographBlock {
     virtual Border getMargin() const noexcept override;
 
   private:
-    const Column* columns;
-    int colsnum;
+    std::vector<Column> columns;
 };
 
 } /* -- namespace Typograph */

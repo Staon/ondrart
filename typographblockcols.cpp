@@ -32,9 +32,7 @@ namespace Typograph {
 TypographBlockCols::TypographBlockCols(
     const Column* columns_,
     int colsnum_) :
-  columns(columns_),
-  colsnum(colsnum_) {
-  assert(columns != nullptr && colsnum > 0);
+  columns(columns_, columns_ + colsnum_) {
 
 }
 
@@ -52,7 +50,7 @@ void TypographBlockCols::writeLine(
   int var_count_(0);
   int inner_space_(0);
   int margin_(0);
-  for(int i_(0); i_ < colsnum; ++i_) {
+  for(int i_(0); i_ < columns.size(); ++i_) {
     if(columns[i_].width <= 0)
       ++var_count_;
     else
@@ -88,7 +86,7 @@ void TypographBlockCols::writeLine(
 
   margin_ = 0;
   bool var_first_(true);
-  for(int i_(0); i_ < colsnum; ++i_) {
+  for(int i_(0); i_ < columns.size(); ++i_) {
     /* -- left margin */
     auto block_margin_(columns[i_].block->getMargin());
     if(i_ > 0) {
@@ -125,18 +123,18 @@ void TypographBlockCols::writeLine(
 
 bool TypographBlockCols::isFinished() const noexcept {
   return std::all_of(
-      columns,
-      columns + colsnum,
+      columns.begin(),
+      columns.end(),
       [](const Column& col){ return col.block->isFinished();});
 }
 
 TypographBlockCols::Border TypographBlockCols::getMargin() const noexcept {
-  int left_(columns[0].block->getMargin().left);
-  int right_(columns[colsnum - 1].block->getMargin().right);
+  int left_(columns.front().block->getMargin().left);
+  int right_(columns.back().block->getMargin().right);
   int top_(0);
   int bottom_(0);
-  for(int i_(0); i_ < colsnum; ++i_) {
-    auto margin_(columns[i_].block->getMargin());
+  for(const auto& column_ : columns) {
+    auto margin_(column_.block->getMargin());
     if(margin_.top > top_)
       top_ = margin_.top;
     if(margin_.bottom > bottom_)
