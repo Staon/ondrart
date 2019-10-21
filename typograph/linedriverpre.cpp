@@ -40,7 +40,7 @@ LineDriverPre::LineDriverPre(
 }
 
 LineDriverPre::~LineDriverPre() {
-
+  closeSpan();
 }
 
 void LineDriverPre::skipChars(

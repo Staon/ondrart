@@ -17,48 +17,42 @@
  * along with OndraRT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OndraRT__TYPOGRAPHBLOCKATTRS_H_
-#define OndraRT__TYPOGRAPHBLOCKATTRS_H_
+#ifndef OndraRT__TYPOGRAPHBLOCKPAR_H_
+#define OndraRT__TYPOGRAPHBLOCKPAR_H_
 
-#include "linedriver.h"
-#include "typographblock.h"
-#include "typographstate.h"
+#include <ondrart/typograph/typographblock.h>
 
 namespace OndraRT {
 
 namespace Typograph {
 
 /**
- * @brief A simple block keeping text attributes
+ * @brief Paragraph of a text
  */
-class TypographBlockAttrs : public TypographBlock {
+class TypographBlockPar : public TypographBlock {
   public:
     /**
      * @brief Ctor
      *
-     * @param block_ Nested block. The ownership is not taken.
-     * @param font_style_ Font style
-     * @param font_weight_ Font weight
-     * @param foreground_ Foreground color
-     * @param background_ Background color
+     * @param block_ Text of the paragraph
+     * @param first_indent_ Indentation of the first line (>= 0)
+     * @param indent_ Indentation of following lines (>= 0)
      */
-    explicit TypographBlockAttrs(
+    explicit TypographBlockPar(
         TypographBlock* block_,
-        LineDriver::FontStyle font_style_,
-        LineDriver::FontWeight font_weight_,
-        LineDriver::Color foreground_,
-        LineDriver::Color background_);
+        int first_indent_,
+        int indent_);
 
     /**
      * @brief Dtor
      */
-    virtual ~TypographBlockAttrs();
+    virtual ~TypographBlockPar();
 
     /* -- avoid copying */
-    TypographBlockAttrs(
-        const TypographBlockAttrs&) = delete;
-    TypographBlockAttrs& operator =(
-        const TypographBlockAttrs&) = delete;
+    TypographBlockPar(
+        const TypographBlockPar&) = delete;
+    TypographBlockPar& operator =(
+        const TypographBlockPar&) = delete;
 
     /* -- typograph block */
     virtual void writeLine(
@@ -71,11 +65,13 @@ class TypographBlockAttrs : public TypographBlock {
 
   private:
     TypographBlock* block;
-    TypographState state;
+    int first_indent;
+    int indent;
+    bool first_line;
 };
 
 } /* -- namespace Typograph */
 
 } /* -- namespace OndraRT */
 
-#endif /* OndraRT__TYPOGRAPHBLOCKATTRS_H_ */
+#endif /* OndraRT__TYPOGRAPHBLOCKPAR_H_ */

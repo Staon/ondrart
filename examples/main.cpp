@@ -20,19 +20,19 @@
 #include <iostream>
 #include <string>
 
-#include "getopt.h"
-#include "linedriverios.h"
-#include "linedriverpre.h"
-#include "typograph.h"
-#include "typographblockattrs.h"
-#include "typographblockbox.h"
-#include "typographblockcols.h"
-#include "typographblockpar.h"
-#include "typographblockseq.h"
-#include "typographblocktext.h"
+#include <ondrart/typograph/linedriverios.h>
+#include <ondrart/typograph/linedriverpre.h>
+#include <ondrart/typograph/typograph.h>
+#include <ondrart/typograph/typographblockattrs.h>
+#include <ondrart/typograph/typographblockbox.h>
+#include <ondrart/typograph/typographblockcols.h>
+#include <ondrart/typograph/typographblockpar.h>
+#include <ondrart/typograph/typographblockseq.h>
+#include <ondrart/typograph/typographblocktext.h>
+#include <ondrart/usage/usage.h>
 
 namespace T = ::OndraRT::Typograph;
-namespace G = ::OndraRT::Getopt;
+namespace U = ::OndraRT::Usage;
 
 int main(
     int argc_,
@@ -103,7 +103,7 @@ int main(
 //
 //  std::cout << "</pre></body></html>" << std::endl;
 
-  G::Getopt getopt_(argc_, argv_);
+  U::Usage getopt_(argc_, argv_);
   getopt_.openSection("Command line options");
   getopt_.addOption(
       {0, 1}, 'h', "help",
@@ -118,15 +118,15 @@ int main(
       "Long option mandatory",
       [](const std::string& opt_){});
   getopt_.addOptionArg(
-      {1, 1}, 's', "argopt", G::PresenceArg::NOT_EMPTY, "argument",
+      {1, 1}, 's', "argopt", U::PresenceArg::NOT_EMPTY, "argument",
       "This is a mandatory *option* with a **mandatory** argument.",
       [](const std::string&, const std::string*){});
   getopt_.addOptionArg(
-      {1, 1}, 'x', "argopt-e", G::PresenceArg::EMPTY, "argument",
+      {1, 1}, 'x', "argopt-e", U::PresenceArg::EMPTY, "argument",
       "This is a mandatory *option* with a possibly **empty** argument.",
       [](const std::string&, const std::string*){});
   getopt_.addOptionArg(
-      {1, 1}, 0, "argopt2", G::PresenceArg::OPTIONAL, "argument",
+      {1, 1}, 0, "argopt2", U::PresenceArg::OPTIONAL, "argument",
       "This is a mandatory *option* with an **optional** #fg:red#argument#fg#.",
       [](const std::string&, const std::string*){});
   getopt_.closeSection();

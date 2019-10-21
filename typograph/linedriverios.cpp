@@ -19,7 +19,7 @@
 
 #include "linedriverios.h"
 
-#include "assert.h"
+#include <assert.h>
 #include <iostream>
 
 namespace OndraRT {

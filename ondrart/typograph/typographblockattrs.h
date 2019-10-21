@@ -17,39 +17,48 @@
  * along with OndraRT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OndraRT__TYPOGRAPHBLOCKSEQ_H_
-#define OndraRT__TYPOGRAPHBLOCKSEQ_H_
+#ifndef OndraRT__TYPOGRAPHBLOCKATTRS_H_
+#define OndraRT__TYPOGRAPHBLOCKATTRS_H_
 
-#include "typographblock.h"
+#include <ondrart/typograph/linedriver.h>
+#include <ondrart/typograph/typographblock.h>
+#include <ondrart/typograph/typographstate.h>
 
 namespace OndraRT {
 
 namespace Typograph {
 
 /**
- * @brief Sequential container
- *
- * This container prints blocks sequentially and vertically.
+ * @brief A simple block keeping text attributes
  */
-class TypographBlockSeq : public TypographBlock {
+class TypographBlockAttrs : public TypographBlock {
   public:
     /**
      * @brief Ctor
      *
-     * @param blocks_ Array of blocks
-     * @param blocks_num_ Number of blocks
+     * @param block_ Nested block. The ownership is not taken.
+     * @param font_style_ Font style
+     * @param font_weight_ Font weight
+     * @param foreground_ Foreground color
+     * @param background_ Background color
      */
-    explicit TypographBlockSeq(
-        TypographBlock** blocks_,
-        int blocks_num_);
+    explicit TypographBlockAttrs(
+        TypographBlock* block_,
+        LineDriver::FontStyle font_style_,
+        LineDriver::FontWeight font_weight_,
+        LineDriver::Color foreground_,
+        LineDriver::Color background_);
 
-    virtual ~TypographBlockSeq();
+    /**
+     * @brief Dtor
+     */
+    virtual ~TypographBlockAttrs();
 
     /* -- avoid copying */
-    TypographBlockSeq(
-        const TypographBlockSeq&) = delete;
-    TypographBlockSeq& operator =(
-        const TypographBlockSeq&) = delete;
+    TypographBlockAttrs(
+        const TypographBlockAttrs&) = delete;
+    TypographBlockAttrs& operator =(
+        const TypographBlockAttrs&) = delete;
 
     /* -- typograph block */
     virtual void writeLine(
@@ -60,15 +69,13 @@ class TypographBlockSeq : public TypographBlock {
     virtual bool isFinished() const noexcept override;
     virtual Border getMargin() const noexcept override;
 
-  public:
-    TypographBlock** blocks;
-    int blocks_num;
-    int current_block;
-    int current_space;
+  private:
+    TypographBlock* block;
+    TypographState state;
 };
 
 } /* -- namespace Typograph */
 
 } /* -- namespace OndraRT */
 
-#endif /* OndraRT__TYPOGRAPHBLOCKSEQ_H_ */
+#endif /* OndraRT__TYPOGRAPHBLOCKATTRS_H_ */

@@ -17,36 +17,53 @@
  * along with OndraRT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OndraRT__LINEDRIVERPRE_H_
-#define OndraRT__LINEDRIVERPRE_H_
+#ifndef OndraRT__LINEDRIVERIOS_H_
+#define OndraRT__LINEDRIVERIOS_H_
 
 #include <iosfwd>
 
-#include "linedriver.h"
+#include <ondrart/typograph/linedriver.h>
 
 namespace OndraRT {
 
 namespace Typograph {
 
 /**
- * @brief A line driver generating content of the HTML <pre> tag
+ * @brief Simple line driver based on C++ output streams
+ *
+ * The driver allows output of text but it doesn't support any text attributes
+ * and colors.
  */
-class LineDriverPre : public LineDriver {
+class LineDriverIos : public LineDriver {
+  public:
+    enum LineSync {
+      ASYNC,  /**< the output is not synced at the end of line */
+      SYNC,   /**< the output is flushed at the end of every line */
+    };
+
   public:
     /**
      * @brief Ctor
      *
-     * @param os_ An output stream. The ownership is not taken.
+     * @param os_ The output stream. The ownership is not taken.
+     * @param sync_ Flushing of every line
      */
-    explicit LineDriverPre(
-        std::ostream* os_);
+    explicit LineDriverIos(
+        std::ostream* os_,
+        LineSync sync_ = ASYNC);
 
     /**
      * @brief Dtor
      */
-    virtual ~LineDriverPre();
+    virtual ~LineDriverIos();
 
-    /* -- line driver */
+    /* -- avoid copying */
+    LineDriverIos(
+        const LineDriverIos&) = delete;
+    LineDriverIos& operator =(
+        const LineDriverIos&) = delete;
+
+    /* -- line driver interface */
     virtual void skipChars(
         int chars_) override;
     virtual void writeText(
@@ -63,23 +80,12 @@ class LineDriverPre : public LineDriver {
         Color color_) override;
 
   private:
-    void printColor(
-        const char* style_,
-        Color color_);
-    void openSpan();
-    void closeSpan();
-
     std::ostream* os;
-    bool opened_span;
-    bool changed_attributes;
-    FontStyle font_style;
-    FontWeight font_weight;
-    Color foreground;
-    Color background;
+    LineSync sync;
 };
 
 } /* -- namespace Typograph */
 
 } /* -- namespace OndraRT */
 
-#endif /* OndraRT__LINEDRIVERPRE_H_ */
+#endif /* OndraRT__LINEDRIVERIOS_H_ */

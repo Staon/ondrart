@@ -23,9 +23,9 @@
 #include <string>
 #include <vector>
 
-#include "typographblock.h"
-#include "typographstate.h"
-#include "typotokenizer.h"
+#include <ondrart/typograph/typographblock.h>
+#include <ondrart/typograph/typographstate.h>
+#include <ondrart/typograph/typotokenizer.h>
 
 namespace OndraRT {
 

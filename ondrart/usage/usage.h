@@ -26,7 +26,7 @@
 
 namespace OndraRT {
 
-namespace Getopt {
+namespace Usage {
 
 /**
  * @brief Specification of option occurrences
@@ -57,7 +57,7 @@ enum class PresenceArg {
  * to standard getopt() function but it can do more: mainly it formats
  * the help message too.
  */
-class Getopt {
+class Usage {
   public:
 
     /**
@@ -66,7 +66,7 @@ class Getopt {
      * @param argc_ number of command line parameters
      * @param argv_ command line parameters
      */
-    explicit Getopt(
+    explicit Usage(
         int argc_,
         char* argv_[]);
 
@@ -78,7 +78,7 @@ class Getopt {
      * @param name_ Name of the binary (shown in the help message)
      * @param brief_ Brief description of the binary
      */
-    explicit Getopt(
+    explicit Usage(
         int argc_,
         char* argv_[],
         const std::string& name_,
@@ -94,7 +94,7 @@ class Getopt {
      * @param extra_args_ A text shown after command line options (other
      *     positional parameters)
      */
-    explicit Getopt(
+    explicit Usage(
         int argc_,
         char* argv_[],
         const std::string& name_,
@@ -104,13 +104,13 @@ class Getopt {
     /**
      * @brief Dtor
      */
-    ~Getopt();
+    ~Usage();
 
     /* -- avoid copying */
-    Getopt(
-        const Getopt&) = delete;
-    Getopt& operator =(
-        const Getopt&) = delete;
+    Usage(
+        const Usage&) = delete;
+    Usage& operator =(
+        const Usage&) = delete;
 
     /**
      * @brief Set shown name of the binary

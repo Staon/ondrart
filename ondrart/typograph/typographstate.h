@@ -22,7 +22,7 @@
 
 #include <vector>
 
-#include "linedriver.h"
+#include <ondrart/typograph/linedriver.h>
 
 namespace OndraRT {
 

@@ -20,7 +20,7 @@
 #include "typographblockcols.h"
 
 #include <algorithm>
-#include "assert.h"
+#include <assert.h>
 
 #include "linedriver.h"
 #include "typoerror.h"

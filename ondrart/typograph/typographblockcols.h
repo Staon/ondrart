@@ -17,42 +17,48 @@
  * along with OndraRT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OndraRT__TYPOGRAPHBLOCKPAR_H_
-#define OndraRT__TYPOGRAPHBLOCKPAR_H_
+#ifndef OndraRT__TYPOGRAPHBLOCKCOLS_H_
+#define OndraRT__TYPOGRAPHBLOCKCOLS_H_
 
-#include "typographblock.h"
+#include <vector>
+
+#include <ondrart/typograph/typographblock.h>
 
 namespace OndraRT {
 
 namespace Typograph {
 
 /**
- * @brief Paragraph of a text
+ * @brief Formatting of several text columns
  */
-class TypographBlockPar : public TypographBlock {
+class TypographBlockCols : public TypographBlock {
+  public:
+    struct Column {
+      TypographBlock* block;
+      int width;
+    };
+
   public:
     /**
      * @brief Ctor
      *
-     * @param block_ Text of the paragraph
-     * @param first_indent_ Indentation of the first line (>= 0)
-     * @param indent_ Indentation of following lines (>= 0)
+     * @param columns_ Array of columns. The ownership is not taken.
+     * @param colsnum_ Number of columns
      */
-    explicit TypographBlockPar(
-        TypographBlock* block_,
-        int first_indent_,
-        int indent_);
+    explicit TypographBlockCols(
+        const Column* columns_,
+        int colsnum_);
 
     /**
      * @brief Dtor
      */
-    virtual ~TypographBlockPar();
+    virtual ~TypographBlockCols();
 
     /* -- avoid copying */
-    TypographBlockPar(
-        const TypographBlockPar&) = delete;
-    TypographBlockPar& operator =(
-        const TypographBlockPar&) = delete;
+    TypographBlockCols(
+        const TypographBlockCols&) = delete;
+    TypographBlockCols& operator =(
+        const TypographBlockCols&) = delete;
 
     /* -- typograph block */
     virtual void writeLine(
@@ -64,14 +70,11 @@ class TypographBlockPar : public TypographBlock {
     virtual Border getMargin() const noexcept override;
 
   private:
-    TypographBlock* block;
-    int first_indent;
-    int indent;
-    bool first_line;
+    std::vector<Column> columns;
 };
 
 } /* -- namespace Typograph */
 
 } /* -- namespace OndraRT */
 
-#endif /* OndraRT__TYPOGRAPHBLOCKPAR_H_ */
+#endif /* OndraRT__TYPOGRAPHBLOCKCOLS_H_ */

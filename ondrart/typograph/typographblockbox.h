@@ -20,7 +20,7 @@
 #ifndef OndraRT__TYPOGRAPHBLOCKBOX_H_
 #define OndraRT__TYPOGRAPHBLOCKBOX_H_
 
-#include "typographblock.h"
+#include <ondrart/typograph/typographblock.h>
 
 namespace OndraRT {
 

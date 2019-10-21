@@ -20,16 +20,17 @@
 #include "linedriver.h"
 
 namespace OndraRT {
+
 namespace Typograph {
 
 LineDriver::LineDriver() {
-  // TODO Auto-generated constructor stub
 
 }
 
 LineDriver::~LineDriver() {
-  // TODO Auto-generated destructor stub
+
 }
 
 } /* -- namespace Typograph */
+
 } /* -- namespace OndraRT */

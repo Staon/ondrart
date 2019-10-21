@@ -17,7 +17,7 @@
  * along with OndraRT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "getopt.h"
+#include "usage.h"
 
 #include <iostream>
 #include <memory>
@@ -39,7 +39,7 @@
 
 namespace OndraRT {
 
-namespace Getopt {
+namespace Usage {
 
 namespace T = Typograph;
 
@@ -342,7 +342,7 @@ T::TypographBlock* CloseSection::printRecord(
 
 } /* -- namespace */
 
-struct Getopt::Impl {
+struct Usage::Impl {
     int argc;
     char** argv;
 
@@ -371,7 +371,7 @@ struct Getopt::Impl {
     ~Impl();
 };
 
-Getopt::Impl::Impl(
+Usage::Impl::Impl(
     int argc_,
     char* argv_[],
     const std::string& name_,
@@ -388,18 +388,18 @@ Getopt::Impl::Impl(
 
 }
 
-Getopt::Impl::~Impl() {
+Usage::Impl::~Impl() {
 
 }
 
-Getopt::Getopt(
+Usage::Usage(
     int argc_,
     char* argv_[]) :
   pimpl(new Impl(argc_, argv_, "$0", "", "")) {
 
 }
 
-Getopt::Getopt(
+Usage::Usage(
     int argc_,
     char* argv_[],
     const std::string& name_,
@@ -408,7 +408,7 @@ Getopt::Getopt(
 
 }
 
-Getopt::Getopt(
+Usage::Usage(
     int argc_,
     char* argv_[],
     const std::string& name_,
@@ -418,32 +418,32 @@ Getopt::Getopt(
 
 }
 
-Getopt::~Getopt() {
+Usage::~Usage() {
   delete pimpl;
   pimpl = nullptr;
 }
 
-void Getopt::setName(
+void Usage::setName(
     const std::string& name_) {
   pimpl->name = name_;
 }
 
-void Getopt::setBrief(
+void Usage::setBrief(
     const std::string& brief_) {
   pimpl->brief = brief_;
 }
 
-void Getopt::setExtraArgs(
+void Usage::setExtraArgs(
     const std::string& extra_args_) {
   pimpl->extra_args = extra_args_;
 }
 
-void Getopt::openSection(
+void Usage::openSection(
     const std::string& title_) {
   pimpl->usage.emplace_back(new Section(title_));
 }
 
-void Getopt::addOption(
+void Usage::addOption(
     Presence presence_,
     char short_,
     const std::string& long_,
@@ -461,7 +461,7 @@ void Getopt::addOption(
   pimpl->usage.emplace_back(new Option(presence_, short_, long_, help_));
 }
 
-void Getopt::addOptionArg(
+void Usage::addOptionArg(
     Presence presence_,
     char short_,
     const std::string& long_,
@@ -485,26 +485,26 @@ void Getopt::addOptionArg(
       presence_, short_, long_, arg_presence_, arg_name_, help_));
 }
 
-void Getopt::addText(
+void Usage::addText(
     const std::string& text_) {
 
 }
 
-void Getopt::addExplanation(
+void Usage::addExplanation(
     const std::string& to_explain_,
     const std::string& explanation_) {
 
 }
 
-void Getopt::closeSection() {
+void Usage::closeSection() {
   pimpl->usage.emplace_back(new CloseSection());
 }
 
-void Getopt::printUsage() {
+void Usage::printUsage() {
   printUsage(std::cout, -1, false);
 }
 
-void Getopt::printUsage(
+void Usage::printUsage(
     std::ostream& os_,
     int width_,
     bool terminal_) {
