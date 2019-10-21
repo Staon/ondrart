@@ -103,33 +103,27 @@ int main(
 //
 //  std::cout << "</pre></body></html>" << std::endl;
 
-  U::Usage getopt_(argc_, argv_);
-  getopt_.openSection("Command line options");
-  getopt_.addOption(
+  U::Usage usage_(argc_, argv_);
+  usage_.openSection("Command line options");
+  usage_.addOption(
       {0, 1}, 'h', "help",
-      "Print help message. The help message must be long enough to be wrapped.",
-      [](const std::string& opt_){});
-  getopt_.addOption(
+      "Print help message. The help message must be long enough to be wrapped.");
+  usage_.addOption(
       {1, 1}, 'c', "",
-      "Short option mandatory",
-      [](const std::string& opt_){});
-  getopt_.addOption(
+      "Short option mandatory");
+  usage_.addOption(
       {1, 1}, 0, "long1",
-      "Long option mandatory",
-      [](const std::string& opt_){});
-  getopt_.addOptionArg(
+      "Long option mandatory");
+  usage_.addOptionArg(
       {1, 1}, 's', "argopt", U::PresenceArg::NOT_EMPTY, "argument",
-      "This is a mandatory *option* with a **mandatory** argument.",
-      [](const std::string&, const std::string*){});
-  getopt_.addOptionArg(
+      "This is a mandatory *option* with a **mandatory** argument.");
+  usage_.addOptionArg(
       {1, 1}, 'x', "argopt-e", U::PresenceArg::EMPTY, "argument",
-      "This is a mandatory *option* with a possibly **empty** argument.",
-      [](const std::string&, const std::string*){});
-  getopt_.addOptionArg(
+      "This is a mandatory *option* with a possibly **empty** argument.");
+  usage_.addOptionArg(
       {1, 1}, 0, "argopt2", U::PresenceArg::OPTIONAL, "argument",
-      "This is a mandatory *option* with an **optional** #fg:red#argument#fg#.",
-      [](const std::string&, const std::string*){});
-  getopt_.closeSection();
+      "This is a mandatory *option* with an **optional** #fg:red#argument#fg#.");
+  usage_.closeSection();
 
-  getopt_.printUsage();
+  usage_.printUsage();
 }

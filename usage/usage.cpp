@@ -447,8 +447,7 @@ void Usage::addOption(
     Presence presence_,
     char short_,
     const std::string& long_,
-    const std::string& help_,
-    std::function<void(const std::string&)> handler_) {
+    const std::string& help_) {
   /* -- maximal lengths of the options help descriptions */
   if (short_ != 0 && pimpl->max_short < 2) {
     pimpl->max_short = 2;  /* -- '-' + short char */
@@ -467,8 +466,7 @@ void Usage::addOptionArg(
     const std::string& long_,
     PresenceArg arg_presence_,
     const std::string& arg_name_,
-    const std::string& help_,
-    std::function<void(const std::string&, const std::string*)> handler_) {
+    const std::string& help_) {
   /* -- maximal lengths of the options help descriptions */
   int name_len_(arg_name_.length());
   if (arg_presence_ == PresenceArg::OPTIONAL)

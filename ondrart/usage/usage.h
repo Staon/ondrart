@@ -159,15 +159,12 @@ class Usage {
      * @param long_ The long option. It can be empty, if there is no long
      *     version
      * @param help_ Help text associated with the option.
-     * @param handler_ A handler invoked if the option is parsed. The argument
-     *     is the name of the option.
      */
     void addOption(
         Presence presence_,
         char short_,
         const std::string& long_,
-        const std::string& help_,
-        std::function<void(const std::string&)> handler_);
+        const std::string& help_);
 
     /**
      * @brief Add new command line option with an argument
@@ -180,10 +177,6 @@ class Usage {
      * @param arg_presence_ Presence of the argument (mandatory/optional)
      * @param arg_name_ Name of the argument (shown in the help)
      * @param help_ Help text associated with the option
-     * @param handler_ A handler invoked if the option is parsed. First
-     *     argument if the name of the option. The second argument is the
-     *     value of the option's argument. If it's null, the argument is not
-     *     present.
      */
     void addOptionArg(
         Presence presence_,
@@ -191,8 +184,7 @@ class Usage {
         const std::string& long_,
         PresenceArg arg_presence_,
         const std::string& arg_name_,
-        const std::string& help_,
-        std::function<void(const std::string&, const std::string*)> handler_);
+        const std::string& help_);
 
     /**
      * @brief Add free text
