@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.5)
 project(ondrart_typograph VERSION 1.0)
 
 include_directories(.. ../ondrart/typograph)
-set(CMAKE_CXX_STANDARD 11)
 
 add_library(ondrart_typograph STATIC
     linedriver.cpp

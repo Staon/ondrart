@@ -18,8 +18,10 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
+#include <ondrart/base64/ostream.h>
 #include <ondrart/typograph/linedriverios.h>
 #include <ondrart/typograph/linedriverpre.h>
 #include <ondrart/typograph/typograph.h>
@@ -31,6 +33,7 @@
 #include <ondrart/typograph/typographblocktext.h>
 #include <ondrart/usage/usage.h>
 
+namespace B = ::OndraRT::Base64;
 namespace T = ::OndraRT::Typograph;
 namespace U = ::OndraRT::Usage;
 
@@ -103,27 +106,36 @@ int main(
 //
 //  std::cout << "</pre></body></html>" << std::endl;
 
-  U::Usage usage_(argc_, argv_);
-  usage_.openSection("Command line options");
-  usage_.addOption(
-      {0, 1}, 'h', "help",
-      "Print help message. The help message must be long enough to be wrapped.");
-  usage_.addOption(
-      {1, 1}, 'c', "",
-      "Short option mandatory");
-  usage_.addOption(
-      {1, 1}, 0, "long1",
-      "Long option mandatory");
-  usage_.addOptionArg(
-      {1, 1}, 's', "argopt", U::PresenceArg::NOT_EMPTY, "argument",
-      "This is a mandatory *option* with a **mandatory** argument.");
-  usage_.addOptionArg(
-      {1, 1}, 'x', "argopt-e", U::PresenceArg::EMPTY, "argument",
-      "This is a mandatory *option* with a possibly **empty** argument.");
-  usage_.addOptionArg(
-      {1, 1}, 0, "argopt2", U::PresenceArg::OPTIONAL, "argument",
-      "This is a mandatory *option* with an **optional** #fg:red#argument#fg#.");
-  usage_.closeSection();
+//  U::Usage usage_(argc_, argv_);
+//  usage_.openSection("Command line options");
+//  usage_.addOption(
+//      {0, 1}, 'h', "help",
+//      "Print help message. The help message must be long enough to be wrapped.");
+//  usage_.addOption(
+//      {1, 1}, 'c', "",
+//      "Short option mandatory");
+//  usage_.addOption(
+//      {1, 1}, 0, "long1",
+//      "Long option mandatory");
+//  usage_.addOptionArg(
+//      {1, 1}, 's', "argopt", U::PresenceArg::NOT_EMPTY, "argument",
+//      "This is a mandatory *option* with a **mandatory** argument.");
+//  usage_.addOptionArg(
+//      {1, 1}, 'x', "argopt-e", U::PresenceArg::EMPTY, "argument",
+//      "This is a mandatory *option* with a possibly **empty** argument.");
+//  usage_.addOptionArg(
+//      {1, 1}, 0, "argopt2", U::PresenceArg::OPTIONAL, "argument",
+//      "This is a mandatory *option* with an **optional** #fg:red#argument#fg#.");
+//  usage_.closeSection();
+//
+//  usage_.printUsage();
 
-  usage_.printUsage();
+  std::ostringstream oss_;
+  B::OStream obs_(&oss_, 76);
+  obs_ << "Man is distinguished, not only by his reason, but by this singular "
+      "passion from other animals, which is a lust of the mind, that by "
+      "a perseverance of delight in the continued and indefatigable generation "
+      "of knowledge, exceeds the short vehemence of any carnal pleasure.";
+  obs_.finish();
+  std::cout << oss_.str() << std::endl;
 }

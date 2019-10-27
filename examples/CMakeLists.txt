@@ -9,4 +9,5 @@ add_executable(typograph_example
 target_link_libraries(typograph_example
     ondrart_usage
     ondrart_typograph
+    ondrart_base64
 )
